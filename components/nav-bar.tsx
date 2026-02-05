@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getCurrentUser, isOwner } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { LogoutButton } from "@/components/auth/logout-button";
+import { MobileNav } from "@/components/mobile-nav";
 
 export async function NavBar() {
   const user = await getCurrentUser();
@@ -9,11 +10,11 @@ export async function NavBar() {
 
   return (
     <header className="border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-14 items-center justify-between md:h-16">
         <Link href="/" className="text-lg font-semibold tracking-tight">
           Kotonoha Journal
         </Link>
-        <nav className="flex items-center gap-2">
+        <nav className="hidden items-center gap-2 md:flex">
           <Button asChild variant="ghost" size="sm">
             <Link href="/">ホーム</Link>
           </Button>
@@ -33,6 +34,7 @@ export async function NavBar() {
             </Button>
           )}
         </nav>
+        <MobileNav isOwner={owner} />
       </div>
     </header>
   );
