@@ -15,13 +15,15 @@ function getSupabaseEnv() {
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
   const { supabaseUrl, supabaseAnonKey } = getSupabaseEnv();
+  type CookieOptions = Parameters<ReturnType<typeof NextResponse.next>["cookies"]["set"]>[2];
+  type CookieToSet = { name: string; value: string; options?: CookieOptions };
 
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();
       },
-      setAll(cookiesToSet) {
+      setAll(cookiesToSet: CookieToSet[]) {
         cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
 
         response = NextResponse.next({ request });
