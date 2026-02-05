@@ -341,17 +341,19 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
                 .slice()
                 .reverse()
                 .map((entry) => (
-                  <div key={entry.id} className="space-y-2 rounded-lg border border-border/70 p-3">
-                    <p className="text-xs text-muted-foreground">相談 {entry.sequence}</p>
-                    <p className="text-sm font-medium">{entry.user_message}</p>
-                    <Markdown content={entry.ai_feedback} className="text-sm leading-relaxed text-muted-foreground" />
-                    {entry.draft_content ? (
-                      <details className="rounded-md bg-muted/50 p-2 text-xs text-muted-foreground">
-                        <summary className="cursor-pointer">この相談時の下書きを見る</summary>
-                        <p className="mt-2 whitespace-pre-wrap leading-relaxed">{entry.draft_content}</p>
-                      </details>
-                    ) : null}
-                  </div>
+                  <Card key={entry.id} className="border-border/70">
+                    <CardContent className="space-y-2 p-3">
+                      <p className="text-xs text-muted-foreground">相談 {entry.sequence}</p>
+                      <p className="text-sm font-medium">{entry.user_message}</p>
+                      <Markdown content={entry.ai_feedback} className="text-sm leading-relaxed text-muted-foreground" />
+                      {entry.draft_content ? (
+                        <details className="rounded-md bg-muted/50 p-2 text-xs text-muted-foreground">
+                          <summary className="cursor-pointer">この相談時の下書きを見る</summary>
+                          <p className="mt-2 whitespace-pre-wrap leading-relaxed">{entry.draft_content}</p>
+                        </details>
+                      ) : null}
+                    </CardContent>
+                  </Card>
                 ))
             )}
           </div>

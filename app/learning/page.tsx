@@ -20,7 +20,7 @@ export default async function LearningPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <h1 className="font-[var(--font-heading)] text-3xl font-bold">学習ページ</h1>
+          <h1 className="text-3xl font-bold">学習ページ</h1>
           <p className="text-sm text-muted-foreground">非公開の執筆プロセスとAIフィードバック履歴を確認できます。</p>
         </div>
         <Button asChild variant="outline">

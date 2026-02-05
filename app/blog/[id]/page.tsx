@@ -5,6 +5,7 @@ import { getCurrentUser, isOwner } from "@/lib/auth";
 import { getPostById } from "@/lib/data/posts";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -82,16 +83,18 @@ export default async function BlogDetailPage({ params }: PageProps) {
             {new Date(post.created_at).toLocaleDateString("ja-JP")}
           </p>
         </div>
-        <h1 className="font-[var(--font-heading)] text-4xl font-bold leading-tight">{post.title}</h1>
+        <h1 className="text-4xl font-bold leading-tight">{post.title}</h1>
       </header>
 
       {post.thumbnail_url ? (
         <img src={post.thumbnail_url} alt={post.title} className="w-full rounded-xl border border-border/60" />
       ) : null}
 
-      <div className="prose-jp whitespace-pre-wrap rounded-xl border border-border/60 bg-card/60 p-6 text-[1.04rem]">
-        {post.content}
-      </div>
+      <Card className="border-border/60 bg-card/60">
+        <CardContent className="prose-jp whitespace-pre-wrap p-6 text-[1.04rem]">
+          {post.content}
+        </CardContent>
+      </Card>
 
       {owner ? (
         <div className="flex flex-wrap gap-2">

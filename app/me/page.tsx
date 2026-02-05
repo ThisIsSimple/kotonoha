@@ -21,7 +21,7 @@ export default async function MePage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="font-[var(--font-heading)] text-3xl font-bold">マイページ</h1>
+          <h1 className="text-3xl font-bold">マイページ</h1>
           <p className="text-sm text-muted-foreground">投稿の管理と学習ページへの移動ができます。</p>
         </div>
         <div className="flex gap-2">

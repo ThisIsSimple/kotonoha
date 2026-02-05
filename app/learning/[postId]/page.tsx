@@ -34,7 +34,7 @@ export default async function LearningDetailPage({ params }: PageProps) {
     <div className="mx-auto max-w-4xl space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="space-y-1">
-          <h1 className="font-[var(--font-heading)] text-3xl font-bold">{post.title}</h1>
+          <h1 className="text-3xl font-bold">{post.title}</h1>
           <div className="flex items-center gap-2">
             <Badge variant="secondary">学習専用</Badge>
             <p className="text-sm text-muted-foreground">フィードバック {history.length} 回</p>
@@ -60,7 +60,7 @@ export default async function LearningDetailPage({ params }: PageProps) {
       </Card>
 
       <section className="space-y-3">
-        <h2 className="font-[var(--font-heading)] text-xl font-semibold">Geminiフィードバックの対話履歴</h2>
+        <h2 className="text-xl font-semibold">Geminiフィードバックの対話履歴</h2>
         <ChatThread history={history} />
       </section>
     </div>

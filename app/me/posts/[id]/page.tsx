@@ -31,7 +31,7 @@ export default async function EditPostPage({ params }: PageProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
-        <h1 className="font-[var(--font-heading)] text-3xl font-bold">記事を編集</h1>
+        <h1 className="text-3xl font-bold">記事を編集</h1>
         <div className="flex gap-2">
           <Button asChild variant="outline" size="sm">
             <Link href="/me">一覧へ戻る</Link>

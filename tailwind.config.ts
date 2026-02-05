@@ -15,6 +15,18 @@ const config: Config = {
         "2xl": "1200px",
       },
     },
+    fontFamily: {
+      sans: [
+        "\"Spoqa Han Sans JP\"",
+        "\"Hiragino Kaku Gothic ProN\"",
+        "\"Hiragino Sans\"",
+        "\"Yu Gothic\"",
+        "\"Meiryo\"",
+        "system-ui",
+        "-apple-system",
+        "sans-serif",
+      ],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",

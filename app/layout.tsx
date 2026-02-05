@@ -1,18 +1,6 @@
 import type { Metadata } from "next";
-import { Noto_Serif_JP, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
-
-const headingFont = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-heading",
-});
-
-const bodyFont = Noto_Serif_JP({
-  subsets: ["latin"],
-  variable: "--font-body",
-  weight: ["400", "500", "700"],
-});
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -40,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
-      <body className={`${headingFont.variable} ${bodyFont.variable} font-[var(--font-body)]`}>
+      <body className="font-sans">
         <NavBar />
         <main className="container py-10">{children}</main>
       </body>
