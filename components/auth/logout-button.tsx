@@ -23,7 +23,7 @@ export function LogoutButton() {
       }}
       disabled={isPending}
     >
-      {isPending ? "로그아웃 중..." : "로그아웃"}
+      {isPending ? "ログアウト中..." : "ログアウト"}
     </Button>
   );
 }

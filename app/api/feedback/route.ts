@@ -11,18 +11,19 @@ type FeedbackBody = {
 
 function buildPrompt(content: string, userMessage: string) {
   return [
-    "너는 일본어 일기 학습 코치다.",
-    "규칙:",
-    "1) 일기 전체를 새로 써주지 않는다.",
-    "2) 수정 제안/표현 개선/문장 흐름 코칭만 제공한다.",
-    "3) 최대 6개 포인트로 간결하게 작성한다.",
-    "4) 각 포인트는 '문제 -> 제안 -> 짧은 예시(일본어)' 형식으로 작성한다.",
-    "5) 문법/자연스러움/뉘앙스 관점에서 우선순위를 둔다.",
-    "6) 응답 마지막에 오늘의 학습 포인트를 1줄로 요약한다.",
+    "あなたは日本語日記の学習コーチです。",
+    "ルール:",
+    "1) 日記全体を書き直さない。",
+    "2) 改善提案・表現修正・文の流れに関する助言のみ行う。",
+    "3) 最大6ポイントで簡潔にまとめる。",
+    "4) 各ポイントは『課題 -> 提案 -> 短い例文（日本語）』で書く。",
+    "5) 文法・自然さ・ニュアンスを優先して指摘する。",
+    "6) 最後に『今日の学習ポイント』を1行でまとめる。",
+    "7) Markdown形式で回答する（見出し・箇条書き・強調を使用可）。",
     "",
-    `[사용자 요청] ${userMessage}`,
+    `[ユーザーの相談] ${userMessage}`,
     "",
-    "[현재 작성 중인 일기 본문]",
+    "[執筆中の日記本文]",
     content,
   ].join("\n");
 }
@@ -30,7 +31,7 @@ function buildPrompt(content: string, userMessage: string) {
 export async function POST(request: Request) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return NextResponse.json({ error: "GEMINI_API_KEY가 설정되지 않았습니다." }, { status: 500 });
+    return NextResponse.json({ error: "GEMINI_API_KEY が設定されていません。" }, { status: 500 });
   }
 
   const supabase = await createClient();
@@ -39,11 +40,11 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+    return NextResponse.json({ error: "ログインが必要です。" }, { status: 401 });
   }
 
   if (!isOwner(user.id)) {
-    return NextResponse.json({ error: "피드백 권한이 없습니다." }, { status: 403 });
+    return NextResponse.json({ error: "フィードバックを受け取る権限がありません。" }, { status: 403 });
   }
 
   const body = (await request.json()) as FeedbackBody;
@@ -51,14 +52,14 @@ export async function POST(request: Request) {
   const content = body.content?.trim();
   const userMessage =
     body.userMessage?.trim() ||
-    "현재 일기 초안을 검토하고 일본어 표현 개선 포인트를 제안해 주세요.";
+    "現在の日記下書きを確認し、日本語表現の改善ポイントを提案してください。";
 
   if (!postId) {
-    return NextResponse.json({ error: "postId가 필요합니다." }, { status: 400 });
+    return NextResponse.json({ error: "postId が必要です。" }, { status: 400 });
   }
 
   if (!content) {
-    return NextResponse.json({ error: "본문이 비어 있습니다." }, { status: 400 });
+    return NextResponse.json({ error: "本文が空です。" }, { status: 400 });
   }
 
   const { data: post, error: postError } = await supabase
@@ -69,7 +70,7 @@ export async function POST(request: Request) {
     .single();
 
   if (postError || !post) {
-    return NextResponse.json({ error: "해당 글에 접근할 수 없습니다." }, { status: 404 });
+    return NextResponse.json({ error: "この投稿にはアクセスできません。" }, { status: 404 });
   }
 
   const { data: latest, error: latestError } = await supabase
@@ -96,7 +97,7 @@ export async function POST(request: Request) {
     const aiFeedback = geminiResult.response.text().trim();
 
     if (!aiFeedback) {
-      return NextResponse.json({ error: "Gemini가 빈 응답을 반환했습니다." }, { status: 502 });
+      return NextResponse.json({ error: "Gemini が空のレスポンスを返しました。" }, { status: 502 });
     }
 
     const { data: inserted, error: insertError } = await supabase
@@ -105,6 +106,7 @@ export async function POST(request: Request) {
         post_id: postId,
         user_message: userMessage,
         ai_feedback: aiFeedback,
+        draft_content: content,
         sequence,
       })
       .select("*")
@@ -116,7 +118,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ feedback: inserted });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Gemini 요청 중 오류가 발생했습니다.";
+    const message = error instanceof Error ? error.message : "Gemini リクエスト中にエラーが発生しました。";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

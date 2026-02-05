@@ -1,29 +1,29 @@
 # Kotonoha Journal
 
-Next.js 16.1.6 + TypeScript + shadcn/ui 기반의 일본어 일기 블로그 프로젝트입니다.
+Next.js 16.1.6 + TypeScript + shadcn/ui を使った日本語日記ブログです。
 
-## 주요 기능
+## 主な機能
 
-- 공개 블로그 페이지 (`/`, `/blog/[id]`)
-- 작성자 전용 관리 페이지 (`/me`, `/me/new`, `/me/posts/[id]`)
-- 작성자 전용 학습 페이지 (`/learning`, `/learning/[postId]`)
-- Supabase Auth 로그인
-- Supabase RLS 기반 접근 제어
-- Gemini 피드백 도우미 (일기 전체 대필 금지 프롬프트 적용)
-- 피드백 히스토리 저장 (`feedback_history`)
-- Supabase Storage 썸네일 이미지 업로드 (`post-images`)
-- SEO/LLMO: `sitemap.xml`, `robots.txt`, `llms.txt`
+- 公開ブログページ (`/`, `/blog/[id]`)
+- 執筆者専用の管理ページ (`/me`, `/me/new`, `/me/posts/[id]`)
+- 執筆者専用の学習ページ (`/learning`, `/learning/[postId]`)
+- Supabase Auth ログイン
+- Supabase RLS によるアクセス制御
+- Gemini フィードバックアシスタント（全文代筆禁止）
+- フィードバック履歴保存 (`feedback_history`)
+- フィードバック時の下書き本文スナップショット保存 (`feedback_history.draft_content`)
+- Supabase Storage サムネイル画像アップロード (`post-images`)
 
-## 기술 스택
+## 技術スタック
 
 - Next.js `16.1.6`
 - React `19`
 - TypeScript
-- Tailwind CSS + shadcn/ui 스타일
+- Tailwind CSS + shadcn/ui
 - Supabase (Auth, Database, Storage)
 - Gemini API
 
-## 시작하기
+## セットアップ
 
 ```bash
 npm install
@@ -31,7 +31,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-## 환경변수
+## 環境変数
 
 `.env.local`:
 
@@ -44,21 +44,27 @@ GEMINI_API_KEY=YOUR_GEMINI_API_KEY
 GEMINI_MODEL=gemini-2.0-flash
 ```
 
-## Supabase RLS 보강 (단일 작성자 제한)
+## Supabase RLS 強化（単一執筆者に固定）
 
-기존 정책은 "각 사용자 본인 글" 형태라 다중 작성자가 가능합니다.
-단일 작성자 블로그로 제한하려면 아래 마이그레이션 파일의 `YOUR_OWNER_UUID`를 실제 UUID로 바꿔 실행하세요.
+既存ポリシーは「各ユーザーが自分の投稿を操作可能」という形のため、複数執筆者が作成できます。
+単一執筆者ブログに固定したい場合は、下記マイグレーション内の `YOUR_OWNER_UUID` を実際の UUID に置き換えて実行してください。
 
 - `supabase/migrations/20260206_owner_locked_policies.sql`
 
+## フィードバック下書きスナップショット保存
+
+Gemini フィードバック取得時の本文を保存するため、下記マイグレーションを実行してください。
+
+- `supabase/migrations/20260206_add_feedback_draft_content.sql`
+
 ## SEO / LLMO
 
-- `app/sitemap.ts`: 공개 글만 사이트맵 노출
-- `app/robots.ts`: `/me`, `/learning`, `/api` 크롤링 차단
-- `app/llms.txt/route.ts`: LLM 친화 가이드 제공
+- `app/sitemap.ts`: 公開記事のみサイトマップに含める
+- `app/robots.ts`: `/me`, `/learning`, `/api` のクロールを拒否
+- `app/llms.txt/route.ts`: LLM向けガイド
 
-## 주의 사항
+## 注意事項
 
-- 피드백 API는 작성 중 본문을 자동 전달하며, 결과는 `feedback_history`에 저장됩니다.
-- 학습 페이지는 작성자만 접근 가능합니다.
-- 공개 페이지에는 최종 완성본만 노출됩니다.
+- フィードバック API は執筆中の本文を自動で送信し、結果は `feedback_history` に保存されます。
+- 学習ページは執筆者のみ閲覧可能です。
+- 公開ページには完成した日記のみ表示されます。

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!post) {
     return {
-      title: "글을 찾을 수 없습니다",
+      title: "記事が見つかりません",
     };
   }
 
@@ -76,10 +76,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
       <header className="space-y-3">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant={post.published ? "default" : "secondary"}>
-            {post.published ? "공개글" : "비공개 초안"}
+            {post.published ? "公開記事" : "非公開下書き"}
           </Badge>
           <p className="text-sm text-muted-foreground">
-            {new Date(post.created_at).toLocaleDateString("ko-KR")}
+            {new Date(post.created_at).toLocaleDateString("ja-JP")}
           </p>
         </div>
         <h1 className="font-[var(--font-heading)] text-4xl font-bold leading-tight">{post.title}</h1>
@@ -96,10 +96,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
       {owner ? (
         <div className="flex flex-wrap gap-2">
           <Button asChild>
-            <Link href={`/me/posts/${post.id}`}>수정하기</Link>
+            <Link href={`/me/posts/${post.id}`}>編集する</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href={`/learning/${post.id}`}>학습 기록 보기</Link>
+            <Link href={`/learning/${post.id}`}>学習履歴を見る</Link>
           </Button>
         </div>
       ) : null}

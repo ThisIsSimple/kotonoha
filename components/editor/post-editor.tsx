@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Markdown } from "@/components/ui/markdown";
 import { createClient } from "@/lib/supabase/client";
 import type { FeedbackEntry, Post } from "@/lib/types";
 
@@ -46,7 +47,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
     };
 
     if (!title.trim() || !content.trim()) {
-      throw new Error("제목과 본문을 먼저 입력해 주세요.");
+      throw new Error("タイトルと本文を先に入力してください。");
     }
 
     if (postId) {
@@ -60,7 +61,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
 
       const result = await response.json();
       if (!response.ok) {
-        throw new Error(result.error ?? "저장에 실패했습니다.");
+        throw new Error(result.error ?? "保存に失敗しました。");
       }
 
       return result.post as Post;
@@ -76,7 +77,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
 
     const result = await response.json();
     if (!response.ok) {
-      throw new Error(result.error ?? "생성에 실패했습니다.");
+      throw new Error(result.error ?? "作成に失敗しました。");
     }
 
     return result.post as Post;
@@ -90,7 +91,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
         const savedPost = await persistPost(nextPublished);
         setPostId(savedPost.id);
         setPublished(savedPost.published);
-        setMessage(savedPost.published ? "게시 완료되었습니다." : "초안 저장 완료.");
+        setMessage(savedPost.published ? "公開しました。" : "下書きを保存しました。");
 
         if (!initialPost && savedPost.id) {
           router.replace(`/me/posts/${savedPost.id}`);
@@ -98,7 +99,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
 
         router.refresh();
       } catch (error) {
-        setMessage(error instanceof Error ? error.message : "저장 중 오류가 발생했습니다.");
+        setMessage(error instanceof Error ? error.message : "保存中にエラーが発生しました。");
       }
     });
   };
@@ -125,21 +126,21 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
             content,
             userMessage:
               feedbackPrompt.trim() ||
-              "현재 일기 초안 전체를 검토해서 일본어 표현과 문장 흐름 개선 포인트를 알려줘.",
+              "現在の下書き全体を見て、日本語表現と文の流れの改善ポイントを提案してください。",
           }),
         });
 
         const result = await response.json();
         if (!response.ok) {
-          throw new Error(result.error ?? "피드백 요청에 실패했습니다.");
+          throw new Error(result.error ?? "フィードバックの取得に失敗しました。");
         }
 
         setFeedbackHistory((prev) => [...prev, result.feedback]);
         setFeedbackPrompt("");
-        setMessage("Gemini 피드백이 저장되었습니다.");
+        setMessage("Geminiフィードバックを保存しました。");
         router.refresh();
       } catch (error) {
-        setMessage(error instanceof Error ? error.message : "피드백 요청 중 오류가 발생했습니다.");
+        setMessage(error instanceof Error ? error.message : "フィードバック取得中にエラーが発生しました。");
       }
     });
   };
@@ -149,7 +150,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
       return;
     }
 
-    if (!window.confirm("이 글과 학습 히스토리를 삭제할까요?")) {
+    if (!window.confirm("この記事と学習履歴を削除しますか？")) {
       return;
     }
 
@@ -160,7 +161,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
 
       if (!response.ok) {
         const result = await response.json();
-        setMessage(result.error ?? "삭제에 실패했습니다.");
+        setMessage(result.error ?? "削除に失敗しました。");
         return;
       }
 
@@ -185,7 +186,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
       } = await supabase.auth.getUser();
 
       if (!user) {
-        throw new Error("이미지 업로드 전에 로그인이 필요합니다.");
+        throw new Error("画像をアップロードするにはログインが必要です。");
       }
 
       const extension = file.name.split(".").pop() || "jpg";
@@ -201,9 +202,9 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
 
       const { data } = supabase.storage.from("post-images").getPublicUrl(filePath);
       setThumbnailUrl(data.publicUrl);
-      setMessage("이미지를 업로드하고 썸네일 URL에 반영했습니다.");
+      setMessage("画像をアップロードし、サムネイルURLに反映しました。");
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : "이미지 업로드에 실패했습니다.");
+      setMessage(error instanceof Error ? error.message : "画像アップロードに失敗しました。");
     } finally {
       setIsUploading(false);
       event.target.value = "";
@@ -215,22 +216,22 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
       <Card className="animate-rise-up">
         <CardHeader>
           <div className="flex items-center justify-between gap-2">
-            <CardTitle>일기 작성</CardTitle>
+            <CardTitle>日記を執筆</CardTitle>
             <Badge variant={published ? "default" : "secondary"}>
-              {published ? "게시됨" : "초안"}
+              {published ? "公開済み" : "下書き"}
             </Badge>
           </div>
           <CardDescription>
-            현재 단어 수: {wordCount} / 일본어 문체를 의식하며 작성해 보세요.
+            現在の単語数: {wordCount} / 日本語の文体を意識して書いてみましょう。
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="title">제목</Label>
+            <Label htmlFor="title">タイトル</Label>
             <Input id="title" value={title} onChange={(event) => setTitle(event.target.value)} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="thumbnail">썸네일 URL</Label>
+            <Label htmlFor="thumbnail">サムネイルURL</Label>
             <Input
               id="thumbnail"
               placeholder="https://..."
@@ -251,7 +252,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
             </div>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="content">본문</Label>
+            <Label htmlFor="content">本文</Label>
             <Textarea
               id="content"
               className="min-h-[420px] leading-relaxed"
@@ -267,14 +268,14 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
               disabled={isSaving || isFeedbackLoading || isDeleting || isUploading}
             >
               {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
-              초안 저장
+              下書き保存
             </Button>
             <Button
               variant="outline"
               onClick={() => onSave(true)}
               disabled={isSaving || isFeedbackLoading || isDeleting || isUploading}
             >
-              공개 발행
+              公開する
             </Button>
             {postId ? (
               <Button
@@ -287,7 +288,7 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
                 ) : (
                   <Trash2 className="mr-2 h-4 w-4" />
                 )}
-                삭제
+                削除
               </Button>
             ) : null}
           </div>
@@ -300,19 +301,19 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
             <Sparkles className="h-4 w-4" />
-            Gemini 피드백 도우미
+            Geminiフィードバックアシスタント
           </CardTitle>
           <CardDescription>
-            현재 작성 중인 본문을 자동으로 포함해 개선 제안만 제공합니다.
+            執筆中の本文を自動で含め、改善提案のみを返します。
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="focus">추가로 물어볼 포인트 (선택)</Label>
+            <Label htmlFor="focus">追加で相談したいポイント（任意）</Label>
             <Textarea
               id="focus"
               className="min-h-[92px]"
-              placeholder="예: 종결 표현을 자연스럽게 다듬어줘"
+              placeholder="例: 文末表現をもっと自然にしたい"
               value={feedbackPrompt}
               onChange={(event) => setFeedbackPrompt(event.target.value)}
             />
@@ -327,13 +328,13 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
             ) : (
               <Sparkles className="mr-2 h-4 w-4" />
             )}
-            피드백 받기
+            フィードバックを受け取る
           </Button>
 
           <div className="space-y-3">
             {feedbackHistory.length === 0 ? (
               <p className="rounded-lg border border-dashed border-border p-3 text-sm text-muted-foreground">
-                아직 기록이 없습니다. 첫 피드백을 요청해 보세요.
+                まだ履歴がありません。最初のフィードバックを取得してみましょう。
               </p>
             ) : (
               feedbackHistory
@@ -341,11 +342,15 @@ export function PostEditor({ initialPost, initialHistory = [] }: PostEditorProps
                 .reverse()
                 .map((entry) => (
                   <div key={entry.id} className="space-y-2 rounded-lg border border-border/70 p-3">
-                    <p className="text-xs text-muted-foreground">질문 {entry.sequence}</p>
+                    <p className="text-xs text-muted-foreground">相談 {entry.sequence}</p>
                     <p className="text-sm font-medium">{entry.user_message}</p>
-                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
-                      {entry.ai_feedback}
-                    </p>
+                    <Markdown content={entry.ai_feedback} className="text-sm leading-relaxed text-muted-foreground" />
+                    {entry.draft_content ? (
+                      <details className="rounded-md bg-muted/50 p-2 text-xs text-muted-foreground">
+                        <summary className="cursor-pointer">この相談時の下書きを見る</summary>
+                        <p className="mt-2 whitespace-pre-wrap leading-relaxed">{entry.draft_content}</p>
+                      </details>
+                    ) : null}
                   </div>
                 ))
             )}

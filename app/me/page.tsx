@@ -21,22 +21,22 @@ export default async function MePage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="font-[var(--font-heading)] text-3xl font-bold">개인 페이지</h1>
-          <p className="text-sm text-muted-foreground">작성한 글을 관리하고 학습 페이지로 이동할 수 있어요.</p>
+          <h1 className="font-[var(--font-heading)] text-3xl font-bold">マイページ</h1>
+          <p className="text-sm text-muted-foreground">投稿の管理と学習ページへの移動ができます。</p>
         </div>
         <div className="flex gap-2">
           <Button asChild variant="outline">
-            <Link href="/learning">학습 페이지</Link>
+            <Link href="/learning">学習ページ</Link>
           </Button>
           <Button asChild>
-            <Link href="/me/new">새 글 작성</Link>
+            <Link href="/me/new">新しい記事を書く</Link>
           </Button>
         </div>
       </div>
 
       {posts.length === 0 ? (
         <Card>
-          <CardContent className="p-6 text-sm text-muted-foreground">아직 작성한 글이 없습니다.</CardContent>
+          <CardContent className="p-6 text-sm text-muted-foreground">まだ投稿がありません。</CardContent>
         </Card>
       ) : (
         <div className="grid gap-4">
@@ -46,21 +46,21 @@ export default async function MePage() {
                 <div className="flex items-start justify-between gap-2">
                   <CardTitle className="text-xl">{post.title}</CardTitle>
                   <Badge variant={post.published ? "default" : "secondary"}>
-                    {post.published ? "공개" : "초안"}
+                    {post.published ? "公開" : "下書き"}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent className="flex flex-wrap items-center justify-between gap-3 pt-0 text-sm text-muted-foreground">
-                <p>최근 수정: {new Date(post.updated_at).toLocaleString("ko-KR")}</p>
+                <p>最終更新: {new Date(post.updated_at).toLocaleString("ja-JP")}</p>
                 <div className="flex gap-2">
                   <Button asChild size="sm" variant="outline">
-                    <Link href={`/blog/${post.id}`}>미리보기</Link>
+                    <Link href={`/blog/${post.id}`}>プレビュー</Link>
                   </Button>
                   <Button asChild size="sm" variant="outline">
-                    <Link href={`/learning/${post.id}`}>학습 기록</Link>
+                    <Link href={`/learning/${post.id}`}>学習履歴</Link>
                   </Button>
                   <Button asChild size="sm">
-                    <Link href={`/me/posts/${post.id}`}>편집</Link>
+                    <Link href={`/me/posts/${post.id}`}>編集</Link>
                   </Button>
                 </div>
               </CardContent>

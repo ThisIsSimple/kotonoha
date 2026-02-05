@@ -43,20 +43,20 @@ export function LoginForm() {
         return;
       }
 
-      setMessage("회원가입 요청 완료. 이메일 인증 후 로그인해 주세요.");
+      setMessage("新規登録を受け付けました。メール認証後にログインしてください。");
     });
   };
 
   return (
     <Card className="mx-auto w-full max-w-md">
       <CardHeader>
-        <CardTitle>작성자 로그인</CardTitle>
-        <CardDescription>작성/관리/학습 페이지는 로그인 후 이용할 수 있어요.</CardDescription>
+        <CardTitle>執筆者ログイン</CardTitle>
+        <CardDescription>執筆・管理・学習ページはログイン後に利用できます。</CardDescription>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" onSubmit={handleLogin}>
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">メールアドレス</Label>
             <Input
               id="email"
               type="email"
@@ -67,7 +67,7 @@ export function LoginForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">パスワード</Label>
             <Input
               id="password"
               type="password"
@@ -80,7 +80,7 @@ export function LoginForm() {
           {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
           <div className="flex gap-2">
             <Button type="submit" disabled={isPending} className="flex-1">
-              {isPending ? "처리 중..." : "로그인"}
+              {isPending ? "処理中..." : "ログイン"}
             </Button>
             <Button
               type="button"
@@ -88,7 +88,7 @@ export function LoginForm() {
               disabled={isPending}
               onClick={handleSignUp}
             >
-              회원가입
+              新規登録
             </Button>
           </div>
         </form>

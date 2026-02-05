@@ -14,6 +14,7 @@ export type FeedbackEntry = {
   post_id: string;
   user_message: string;
   ai_feedback: string;
+  draft_content?: string | null;
   sequence: number;
   created_at: string;
 };

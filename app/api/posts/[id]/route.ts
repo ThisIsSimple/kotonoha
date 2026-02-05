@@ -21,11 +21,11 @@ export async function PATCH(request: Request, { params }: RouteProps) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+    return NextResponse.json({ error: "ログインが必要です。" }, { status: 401 });
   }
 
   if (!isOwner(user.id)) {
-    return NextResponse.json({ error: "수정 권한이 없습니다." }, { status: 403 });
+    return NextResponse.json({ error: "編集権限がありません。" }, { status: 403 });
   }
 
   const body = (await request.json()) as UpdatePostBody;
@@ -33,7 +33,7 @@ export async function PATCH(request: Request, { params }: RouteProps) {
   const content = body.content?.trim();
 
   if (!title || !content) {
-    return NextResponse.json({ error: "제목과 본문은 필수입니다." }, { status: 400 });
+    return NextResponse.json({ error: "タイトルと本文は必須です。" }, { status: 400 });
   }
 
   const { data: existingPost, error: checkError } = await supabase
@@ -48,7 +48,7 @@ export async function PATCH(request: Request, { params }: RouteProps) {
   }
 
   if (!existingPost) {
-    return NextResponse.json({ error: "글을 찾을 수 없습니다." }, { status: 404 });
+    return NextResponse.json({ error: "記事が見つかりません。" }, { status: 404 });
   }
 
   const { data, error } = await supabase
@@ -69,7 +69,7 @@ export async function PATCH(request: Request, { params }: RouteProps) {
   }
 
   if (!data) {
-    return NextResponse.json({ error: "글을 찾을 수 없습니다." }, { status: 404 });
+    return NextResponse.json({ error: "記事が見つかりません。" }, { status: 404 });
   }
 
   return NextResponse.json({ post: data });
@@ -83,11 +83,11 @@ export async function DELETE(_request: Request, { params }: RouteProps) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+    return NextResponse.json({ error: "ログインが必要です。" }, { status: 401 });
   }
 
   if (!isOwner(user.id)) {
-    return NextResponse.json({ error: "삭제 권한이 없습니다." }, { status: 403 });
+    return NextResponse.json({ error: "削除権限がありません。" }, { status: 403 });
   }
 
   const { data: existingPost, error: checkError } = await supabase
@@ -102,7 +102,7 @@ export async function DELETE(_request: Request, { params }: RouteProps) {
   }
 
   if (!existingPost) {
-    return NextResponse.json({ error: "글을 찾을 수 없습니다." }, { status: 404 });
+    return NextResponse.json({ error: "記事が見つかりません。" }, { status: 404 });
   }
 
   const { error } = await supabase.from("posts").delete().eq("id", id).eq("user_id", user.id);

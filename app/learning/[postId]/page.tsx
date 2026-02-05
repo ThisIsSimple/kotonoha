@@ -36,23 +36,23 @@ export default async function LearningDetailPage({ params }: PageProps) {
         <div className="space-y-1">
           <h1 className="font-[var(--font-heading)] text-3xl font-bold">{post.title}</h1>
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">학습 전용</Badge>
-            <p className="text-sm text-muted-foreground">피드백 {history.length}회</p>
+            <Badge variant="secondary">学習専用</Badge>
+            <p className="text-sm text-muted-foreground">フィードバック {history.length} 回</p>
           </div>
         </div>
         <div className="flex gap-2">
           <Button asChild variant="outline" size="sm">
-            <Link href="/learning">목록</Link>
+            <Link href="/learning">一覧</Link>
           </Button>
           <Button asChild size="sm">
-            <Link href={`/me/posts/${post.id}`}>이 글 편집</Link>
+            <Link href={`/me/posts/${post.id}`}>この記事を編集</Link>
           </Button>
         </div>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">최종 일기 본문</CardTitle>
+          <CardTitle className="text-lg">完成した日記本文</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">{post.content}</p>
@@ -60,7 +60,7 @@ export default async function LearningDetailPage({ params }: PageProps) {
       </Card>
 
       <section className="space-y-3">
-        <h2 className="font-[var(--font-heading)] text-xl font-semibold">Gemini 피드백 대화 기록</h2>
+        <h2 className="font-[var(--font-heading)] text-xl font-semibold">Geminiフィードバックの対話履歴</h2>
         <ChatThread history={history} />
       </section>
     </div>

@@ -15,21 +15,21 @@ export async function NavBar() {
         </Link>
         <nav className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm">
-            <Link href="/">홈</Link>
+            <Link href="/">ホーム</Link>
           </Button>
           {owner ? (
             <>
               <Button asChild variant="ghost" size="sm">
-                <Link href="/me">개인 페이지</Link>
+                <Link href="/me">マイページ</Link>
               </Button>
               <Button asChild variant="ghost" size="sm">
-                <Link href="/learning">학습 페이지</Link>
+                <Link href="/learning">学習ページ</Link>
               </Button>
               <LogoutButton />
             </>
           ) : (
             <Button asChild size="sm">
-              <Link href="/login">로그인</Link>
+              <Link href="/login">ログイン</Link>
             </Button>
           )}
         </nav>

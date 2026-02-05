@@ -17,9 +17,9 @@ export default async function NewPostPage() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="font-[var(--font-heading)] text-3xl font-bold">새 글 작성</h1>
+        <h1 className="font-[var(--font-heading)] text-3xl font-bold">新規投稿</h1>
         <Button asChild variant="outline" size="sm">
-          <Link href="/me">목록으로</Link>
+          <Link href="/me">一覧へ戻る</Link>
         </Button>
       </div>
       <PostEditor />

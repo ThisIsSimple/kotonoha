@@ -25,7 +25,7 @@ export function PostCard({ post }: { post: Post }) {
       )}
       <CardHeader>
         <p className="text-xs text-muted-foreground">
-          {new Date(post.created_at).toLocaleDateString("ko-KR")}
+          {new Date(post.created_at).toLocaleDateString("ja-JP")}
         </p>
         <CardTitle className="line-clamp-2 text-xl">
           <Link href={`/blog/${post.id}`} className="hover:underline">

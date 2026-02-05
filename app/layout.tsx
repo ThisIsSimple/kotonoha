@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     default: "Kotonoha Journal",
     template: "%s | Kotonoha Journal",
   },
-  description: "일본어 일기와 AI 피드백 학습 기록을 함께 관리하는 개인 블로그",
+  description: "日本語日記とAIフィードバックの学習記録を管理する個人ブログ",
   openGraph: {
     title: "Kotonoha Journal",
-    description: "일본어 일기와 AI 피드백 학습 기록 블로그",
+    description: "日本語日記とAIフィードバックの学習記録ブログ",
     type: "website",
   },
   alternates: {
@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
+    <html lang="ja" suppressHydrationWarning>
       <body className={`${headingFont.variable} ${bodyFont.variable} font-[var(--font-body)]`}>
         <NavBar />
         <main className="container py-10">{children}</main>

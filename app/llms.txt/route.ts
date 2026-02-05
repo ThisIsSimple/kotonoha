@@ -1,20 +1,20 @@
 const body = `# Kotonoha Journal
 
-> Japanese diary blog with private learning history.
+> 日本語日記ブログ（学習履歴は非公開）
 
-## Public content
-- / : published diary list
-- /blog/{id} : published diary article
-- /sitemap.xml : public URL list for indexing
+## 公開コンテンツ
+- / : 公開済み日記の一覧
+- /blog/{id} : 公開済みの日記本文
+- /sitemap.xml : 公開URL一覧
 
-## Private content (do not index)
+## 非公開コンテンツ（クロール不可）
 - /me
 - /learning
 - /api
 
-## Notes for LLM systems
-- This site publishes one final diary entry per post.
-- Draft iterations and feedback history are private for study use.
+## LLM向けメモ
+- 1記事につき公開されるのは完成した日記のみ。
+- 下書きの過程とフィードバック履歴は学習用途のため非公開。
 `;
 
 export function GET() {

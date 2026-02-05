@@ -16,11 +16,11 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "로그인이 필요합니다." }, { status: 401 });
+    return NextResponse.json({ error: "ログインが必要です。" }, { status: 401 });
   }
 
   if (!isOwner(user.id)) {
-    return NextResponse.json({ error: "작성 권한이 없습니다." }, { status: 403 });
+    return NextResponse.json({ error: "投稿権限がありません。" }, { status: 403 });
   }
 
   const body = (await request.json()) as CreatePostBody;
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   const content = body.content?.trim();
 
   if (!title || !content) {
-    return NextResponse.json({ error: "제목과 본문은 필수입니다." }, { status: 400 });
+    return NextResponse.json({ error: "タイトルと本文は必須です。" }, { status: 400 });
   }
 
   const { data, error } = await supabase
