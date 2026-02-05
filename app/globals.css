@@ -22,6 +22,24 @@
   --ring: 18 78% 44%;
 }
 
+.dark {
+  --background: 20 16% 10%;
+  --foreground: 30 18% 92%;
+  --card: 20 16% 12%;
+  --card-foreground: 30 18% 92%;
+  --primary: 18 85% 60%;
+  --primary-foreground: 20 15% 12%;
+  --secondary: 25 20% 20%;
+  --secondary-foreground: 35 30% 90%;
+  --muted: 22 15% 18%;
+  --muted-foreground: 30 12% 70%;
+  --accent: 15 30% 24%;
+  --accent-foreground: 35 35% 92%;
+  --border: 22 12% 30%;
+  --input: 22 12% 30%;
+  --ring: 18 85% 60%;
+}
+
 * {
   @apply border-border;
 }
@@ -34,6 +52,13 @@ body {
     radial-gradient(circle at 20% 20%, rgba(255, 190, 130, 0.28), transparent 32%),
     radial-gradient(circle at 75% 5%, rgba(255, 230, 170, 0.22), transparent 36%),
     linear-gradient(180deg, rgba(255, 251, 245, 1) 0%, rgba(255, 245, 232, 1) 100%);
+}
+
+.dark body {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 150, 110, 0.14), transparent 38%),
+    radial-gradient(circle at 80% 0%, rgba(255, 200, 140, 0.12), transparent 40%),
+    linear-gradient(180deg, rgba(18, 16, 14, 1) 0%, rgba(12, 11, 10, 1) 100%);
 }
 
 h1,

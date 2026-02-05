@@ -4,7 +4,6 @@ import Link from "next/link";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { LogoutButton } from "@/components/auth/logout-button";
 
 type MobileNavProps = {
   isOwner: boolean;
@@ -41,7 +40,11 @@ export function MobileNav({ isOwner }: MobileNavProps) {
                     <Link href="/learning">学習ページ</Link>
                   </Button>
                 </SheetClose>
-                <LogoutButton />
+                <SheetClose asChild>
+                  <Button asChild variant="ghost" className="justify-start">
+                    <Link href="/settings">設定</Link>
+                  </Button>
+                </SheetClose>
               </>
             ) : (
               <SheetClose asChild>

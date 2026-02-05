@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getCurrentUser, isOwner } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
-import { LogoutButton } from "@/components/auth/logout-button";
 import { MobileNav } from "@/components/mobile-nav";
 
 export async function NavBar() {
@@ -26,7 +25,9 @@ export async function NavBar() {
               <Button asChild variant="ghost" size="sm">
                 <Link href="/learning">学習ページ</Link>
               </Button>
-              <LogoutButton />
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/settings">設定</Link>
+              </Button>
             </>
           ) : (
             <Button asChild size="sm">
