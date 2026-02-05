@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 40 50% 98%;
+  --foreground: 20 25% 14%;
+  --card: 40 44% 99%;
+  --card-foreground: 20 25% 14%;
+  --primary: 18 78% 44%;
+  --primary-foreground: 40 50% 98%;
+  --secondary: 36 100% 92%;
+  --secondary-foreground: 22 35% 22%;
+  --muted: 36 30% 94%;
+  --muted-foreground: 20 16% 38%;
+  --accent: 12 90% 92%;
+  --accent-foreground: 20 30% 20%;
+  --border: 25 24% 84%;
+  --input: 25 24% 84%;
+  --ring: 18 78% 44%;
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply min-h-screen bg-background text-foreground antialiased;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 190, 130, 0.28), transparent 32%),
+    radial-gradient(circle at 75% 5%, rgba(255, 230, 170, 0.22), transparent 36%),
+    linear-gradient(180deg, rgba(255, 251, 245, 1) 0%, rgba(255, 245, 232, 1) 100%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.01em;
+}
+
+.prose-jp {
+  line-height: 1.95;
+}
